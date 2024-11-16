@@ -1,7 +1,6 @@
 package com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.api;
 
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.application.ProductService;
-import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.domain.Product;
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.dto.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +21,9 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductDto> addProductToCustomer(
             @RequestParam Long customerId,
-            @RequestParam String productName) {
-        ProductDto product = productService.addProductToCustomer(customerId, productName);
+            @RequestParam String productName,
+            @RequestParam Double productPrice) {
+        ProductDto product = productService.addProductToCustomer(customerId, productName,productPrice);
         return ResponseEntity.ok(product);
     }
 }

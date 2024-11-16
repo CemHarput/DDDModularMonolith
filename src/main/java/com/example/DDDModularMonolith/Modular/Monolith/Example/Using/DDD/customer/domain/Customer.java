@@ -25,6 +25,9 @@ public class Customer extends BaseEntity {
     }
 
     public void addProduct(Product product) {
+        if (products.size() >= 10) {
+            throw new IllegalStateException("A customer cannot have more than 10 products.");
+        }
         products.add(product);
         product.setCustomer(this);
     }

@@ -4,6 +4,7 @@ package com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.produc
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.customer.domain.Customer;
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.customer.infrastructure.CustomerRepository;
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.domain.Product;
+import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.domain.ProductDetails;
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.dto.ProductDto;
 import com.example.DDDModularMonolith.Modular.Monolith.Example.Using.DDD.product.infrastructure.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -21,13 +22,14 @@ public class ProductService {
         this.customerRepository = customerRepository;
     }
 
-    public ProductDto addProductToCustomer(Long customerId, String productName) {
+    public ProductDto addProductToCustomer(Long customerId, String productName, double productPrice) {
+
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
-
-        Product product = new Product(productName);
+        ProductDetails productDetails = new ProductDetails(productName, productPrice);
+        Product product = new Product(productDetails);
         customer.addProduct(product);
         Product savedProduct = productRepository.save(product);
-        return new ProductDto(savedProduct.getName());
+        return new ProductDto(savedProduct.getProductDetails().getName(), savedProduct.getProductDetails().getPrice());
     }
 }

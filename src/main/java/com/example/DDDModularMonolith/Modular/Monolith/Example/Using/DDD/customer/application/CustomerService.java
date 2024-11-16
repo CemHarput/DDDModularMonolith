@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -39,7 +38,7 @@ public class CustomerService {
 
     private GetCustomerRequestDto mapToGetCustomerRequestDto(Customer customer) {
         List<ProductDto> productDtos = customer.getProducts().stream()
-                .map(product -> new ProductDto(product.getName()))
+                .map(product -> new ProductDto(product.getProductDetails().getName(),product.getProductDetails().getPrice()))
                 .toList();
 
         return new GetCustomerRequestDto(
